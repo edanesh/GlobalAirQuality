@@ -79,3 +79,8 @@ icons <- awesomeIcons(
 
 sites %>% leaflet() %>% addTiles() %>% addAwesomeMarkers(icon=icons, label=~names, clusterOptions = markerClusterOptions()) %>% addLegend(title = "CO Level", labels = c("High (>1000 ug/m3)", "Medium (500-1000 ug/m3)", "Low (<500 ug/m3)"), colors = c("red", "orange", "green"))
 ```
+
+This report was build by:
+```{r}
+devtools::session_info()[1]
+```
