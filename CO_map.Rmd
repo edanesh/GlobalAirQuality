@@ -27,9 +27,8 @@ Category: Science
 
 Use: This dataset is publicly available for anyone to use under the following terms provided by the Dataset Source — https://openaq.org/ — and is provided "AS IS" without any warranty, express or implied, from Google. Google disclaims all liability for any damages, direct or indirect, resulting from the use of the dataset. 
 
-Update Frequency: Hourly
-
 ##CO Level map made by Leaflet
+Click on clusters to see individual site locations
 
 ```{r}
 #accessing database in BigQuery
@@ -77,7 +76,21 @@ icons <- awesomeIcons(
 
 ```{r}
 
-sites %>% leaflet() %>% addTiles() %>% addAwesomeMarkers(icon=icons, label=~names, clusterOptions = markerClusterOptions()) %>% addLegend(title = "CO Level", labels = c("High (>1000 ug/m3)", "Medium (500-1000 ug/m3)", "Low (<500 ug/m3)"), colors = c("red", "orange", "green"))
+sites %>% 
+leaflet() %>% 
+addTiles() %>% 
+addAwesomeMarkers(icon=icons, label=~names, clusterOptions = markerClusterOptions(iconCreateFunction=JS("function (cluster) {    
+    var childCount = cluster.getChildCount();  
+    if (childCount < 100) {  
+      c = 'rgba(128, 128, 128, 0.5);'
+    } else if (childCount < 1000) {  
+      c = 'rgba(128, 128, 128, 0.5);'  
+    } else { 
+      c = 'rgba(128, 128, 128, 0.5);'  
+    }    
+    return new L.DivIcon({ html: '<div style=\"background-color:'+c+'\"><span>' + childCount + '</span></div>', className: 'marker-cluster', iconSize: new L.Point(40, 40) });
+
+  }"))) %>% addLegend(title = "CO Level", labels = c("High (>1000 ug/m3)", "Medium (500-1000 ug/m3)", "Low (<500 ug/m3)"), colors = c("red", "orange", "green"))
 ```
 
 This report was build by:
