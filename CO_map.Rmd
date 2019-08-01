@@ -2,7 +2,7 @@
 title: "Global Air Quality"
 author: "E Danesh"
 date: "1 August 2019"
-knit: (function(inputFile, encoding) { rmarkdown::render(inputFile, encoding = encoding, output_file ='index.html')})
+knit: (function(inputFile, encoding) {rmarkdown::render(inputFile, encoding = encoding, output_file ='index.html')})
 output: html_document
 ---
 
@@ -15,7 +15,7 @@ library(leaflet)
 
 #Description 
 
-Here, I have used OpenAQ air quality database in Google Cloud Platform (https://console.cloud.google.com/marketplace/details/openaq/real-time-air-quality?filter=solution-type:dataset&q=air%20quality&id=2e51036c-7370-4637-b87f-a001b591b991) to visualise pollution level around the world. 
+Here, I have used the OpenAQ air quality database in Google Cloud Platform (https://console.cloud.google.com/marketplace/details/openaq/real-time-air-quality?filter=solution-type:dataset&q=air%20quality&id=2e51036c-7370-4637-b87f-a001b591b991) to visualise pollution levels around the world. 
 
 OpenAQ is an open-source project to surface live, real-time air quality data from around the world. Their “mission is to enable previously impossible science, impact policy and empower the public to fight air pollution.” The data includes air quality measurements from 5490 locations in 47 countries.
 
@@ -77,5 +77,5 @@ icons <- awesomeIcons(
 
 ```{r}
 
-sites %>% leaflet() %>% addTiles() %>% addAwesomeMarkers(icon=icons, label=~names) %>% addLegend(title = "CO Level", labels = c("High (>1000 ug/m3)", "Medium (500-1000 ug/m3)", "Low (<500 ug/m3)"), colors = c("red", "orange", "green"))
+sites %>% leaflet() %>% addTiles() %>% addAwesomeMarkers(icon=icons, label=~names, clusterOptions = markerClusterOptions()) %>% addLegend(title = "CO Level", labels = c("High (>1000 ug/m3)", "Medium (500-1000 ug/m3)", "Low (<500 ug/m3)"), colors = c("red", "orange", "green"))
 ```
