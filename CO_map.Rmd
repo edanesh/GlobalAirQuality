@@ -1,0 +1,73 @@
+---
+title: "Global Air Quality"
+author: "E Danesh"
+date: "1 August 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE, comment=FALSE)
+library(leaflet)
+```
+
+#Description 
+OpenAQ is an open-source project to surface live, real-time air quality data from around the world. Their “mission is to enable previously impossible science, impact policy and empower the public to fight air pollution.” The data includes air quality measurements from 5490 locations in 47 countries.
+
+Scientists, researchers, developers, and citizens can use this data to understand the quality of air near them currently. The dataset only includes the most current measurement available for the location (no historical data). 
+
+Dataset Source: openaq.org
+
+Category: Science
+
+Use: This dataset is publicly available for anyone to use under the following terms provided by the Dataset Source — https://openaq.org/ — and is provided "AS IS" without any warranty, express or implied, from Google. Google disclaims all liability for any damages, direct or indirect, resulting from the use of the dataset. 
+
+Update Frequency: Hourly
+
+#CO Levels map made by Leaflet
+
+```{r}
+#accessing database in BigQuery
+library(bigrquery)
+project <- "big-sunup-248507"
+#overview of the data
+#query <- "SELECT * FROM `bigquery-public-data.openaq.global_air_quality` LIMIT 10"
+#tb <- bq_project_query(x = project, query)
+#data <- bq_table_download(tb)
+#data
+
+query_CO <- "SELECT location, value, latitude, longitude FROM `bigquery-public-data.openaq.global_air_quality` WHERE pollutant like 'co'"
+```
+
+```{r}
+tb_CO <- bq_project_query(project, query_CO)
+data_CO <- bq_table_download(tb_CO)
+
+
+library(tidyverse)
+sites <- data_CO %>% 
+        mutate(names=location, index=value, lat=latitude, lng=longitude) %>% 
+        select(names, index, lat, lng) %>% 
+        filter(index>0)
+
+        
+
+getColor <- function(sites) {
+  sapply(sites$index, function(index) {
+  if(index <= 359) {
+    "green"
+  } else if(index <= 600) {
+    "orange"
+  } else {
+    "red"
+  } })
+}
+
+icons <- awesomeIcons(
+  icon = 'ios-close',
+  iconColor = 'black',
+  library = 'ion',
+  markerColor = getColor(sites)
+)
+
+sites %>% leaflet() %>% addTiles() %>% addAwesomeMarkers(icon=icons, label=~names) %>% addLegend(title = "CO Level", labels = c("High (>1000 ug/m3)", "Medium (500-1000 ug/m3)", "Low (<500 ug/m3)"), colors = c("red", "orange", "green"))
+```
