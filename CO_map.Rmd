@@ -27,7 +27,7 @@ Category: Science
 
 Use: This dataset is publicly available for anyone to use under the following terms provided by the Dataset Source — https://openaq.org/ — and is provided "AS IS" without any warranty, express or implied, from Google. Google disclaims all liability for any damages, direct or indirect, resulting from the use of the dataset. 
 
-##CO Level map made by Leaflet
+## offline CO Level map made by Leaflet
 Click on clusters to see individual site locations
 
 ```{r}
