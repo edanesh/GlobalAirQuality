@@ -1,0 +1,13 @@
+name: my_openaq
+title: my_openaq
+username:
+account: edanesh
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1069421
+bundleId: 2294354
+url: https://edanesh.shinyapps.io/my_openaq/
+when: 1565084903.26171
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: Shiny account setting.R
