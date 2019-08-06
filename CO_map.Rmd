@@ -40,6 +40,11 @@ project <- "big-sunup-248507"
 #data <- bq_table_download(tb)
 #data
 
+# non-interactive auth
+json_path <- paste(getwd(), "/big-sunup-248507-4dd62ea09179", sep="")
+bq_auth(email = "e.danesh@gmail.com", path = json_path)
+
+
 query_CO <- "SELECT location, value, latitude, longitude FROM `bigquery-public-data.openaq.global_air_quality` WHERE pollutant like 'co'"
 
 tb_CO <- bq_project_query(project, query_CO)
