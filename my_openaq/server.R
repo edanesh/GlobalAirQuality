@@ -13,7 +13,8 @@ library(tidyverse)
 library(leaflet)
 library(shiny)
 
-
+json_path <- paste(getwd(), "/big-sunup-248507-4dd62ea09179", sep="")
+bq_auth(email = "e.danesh@gmail.com", path = json_path)
 # accessing database in BigQuery
 
 project <- "big-sunup-248507"
