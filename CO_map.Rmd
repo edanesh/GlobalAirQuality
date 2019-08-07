@@ -15,7 +15,7 @@ library(leaflet)
 
 #Description 
 
-Here, I have used the OpenAQ air quality database in Google Cloud Platform (https://console.cloud.google.com/marketplace/details/openaq/real-time-air-quality?filter=solution-type:dataset&q=air%20quality&id=2e51036c-7370-4637-b87f-a001b591b991) to visualise pollution levels around the world. 
+Here, I have used the OpenAQ air quality database in Google Cloud Platform (BigQuery) (https://console.cloud.google.com/marketplace/details/openaq/real-time-air-quality?filter=solution-type:dataset&q=air%20quality&id=2e51036c-7370-4637-b87f-a001b591b991) to visualise pollution levels around the world. 
 
 OpenAQ is an open-source project to surface live, real-time air quality data from around the world. Their “mission is to enable previously impossible science, impact policy and empower the public to fight air pollution.” The data includes air quality measurements from 5490 locations in 47 countries.
 
@@ -28,7 +28,7 @@ Category: Science
 Use: This dataset is publicly available for anyone to use under the following terms provided by the Dataset Source — https://openaq.org/ — and is provided "AS IS" without any warranty, express or implied, from Google. Google disclaims all liability for any damages, direct or indirect, resulting from the use of the dataset. 
 
 ## offline CO Level map made by Leaflet
-Click on clusters to see individual site locations
+Zoom in or click on clusters to see individual site locations
 
 ```{r}
 #accessing database in BigQuery
