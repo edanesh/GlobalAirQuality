@@ -3,30 +3,29 @@
 # run the application by clicking 'Run App' above.
 #
 # Find out more about building applications with Shiny here:
-# 
+#
 #    http://shiny.rstudio.com/
 #
 
 library(shiny)
 library(leaflet)
 
-# Define UI for application that draws a histogram
-shinyUI(fluidPage(
+
+ui <- navbarPage(
+        title = "openAQ",
+        windowTitle = "openAQ CO level map",
+        tabPanel(
+                "Tab 1",
+                actionButton("go", "refresh"),
+                actionButton(inputId = "submit_loc",
+                             label = "Submit"),
+                mainPanel(leafletOutput("COmap", height = 600))
+        ),
         
-        
-        # Application title
-        titlePanel("openAQ CO level map"),
-        
-        # Sidebar with a slider input for number of bins 
-        # sidebarLayout(
-        #   sidebarPanel(
-        # 
-        #   ),
-        
-        # Show a plot of the generated distribution
-        actionButton("go", "refresh"),
-        
-        mainPanel(
-                leafletOutput("COmap", height = 600)
+        # hides warning/msgs in the shiny app (?)
+        tags$style(
+                type = "text/css",
+                ".shiny-output-error { visibility: hidden; }",
+                ".shiny-output-error:before { visibility: hidden; }"
         )
-))
+)
