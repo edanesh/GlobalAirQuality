@@ -147,10 +147,10 @@ server <- function(input, output, session) {
                                              addCircleMarkers(
                                                      #icon = icons,
                                                      label =  ~ names,
-                                                     
+                                                     #label = paste(, sep=","),
                                                      fillColor = getColor(isolate(data())),
                                                      fillOpacity = 0.5,
-                                                     radius = 5,
+                                                     radius = 6,
                                                      stroke = FALSE
                                                      # clusterOptions = markerClusterOptions(
                                                      #         iconCreateFunction = JS(custom_cluster),
