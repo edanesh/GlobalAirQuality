@@ -1,0 +1,12 @@
+name: testApp
+title: testApp
+username:
+account: edanesh
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1071028
+bundleId: 2307075
+url: https://edanesh.shinyapps.io/testApp/
+when: 1565451703.58113
+asMultiple: FALSE
+asStatic: FALSE
