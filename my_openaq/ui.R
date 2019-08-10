@@ -8,14 +8,27 @@
 #
 
 library(shiny)
+#library(googleAuthR)
+#library(shinyjs)
 library(leaflet)
 
 
 ui <- navbarPage(
         title = "openAQ",
         windowTitle = "openAQ CO level map",
+        
         tabPanel(
-                "Tab 1",
+                "Tab 1"
+                #useShinyjs(),
+                # sidebarLayout(sidebarPanel(
+                #         p("Welcome!"),
+                #         googleAuthUI("gauth_login")
+                # ),
+                #mainPanel(textOutput("display_username"))
+        ),
+        
+        tabPanel(
+                "Tab 2",
                 actionButton("go", "refresh"),
                 actionButton(inputId = "submit_loc",
                              label = "Submit"),
@@ -23,9 +36,8 @@ ui <- navbarPage(
         ),
         
         # hides warning/msgs in the shiny app (?)
-        tags$style(
-                type = "text/css",
-                ".shiny-output-error { visibility: hidden; }",
-                ".shiny-output-error:before { visibility: hidden; }"
+        tags$style(type="text/css",
+                   ".shiny-output-error { visibility: hidden; }",
+                   ".shiny-output-error:before { visibility: hidden; }"
         )
 )
