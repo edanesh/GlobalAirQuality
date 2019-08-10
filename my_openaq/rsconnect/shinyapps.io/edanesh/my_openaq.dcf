@@ -5,8 +5,8 @@ account: edanesh
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1069421
-bundleId: 2302068
+bundleId: 2306726
 url: https://edanesh.shinyapps.io/my_openaq/
-when: 1565295323.75863
+when: 1565440359.6506
 asMultiple: FALSE
 asStatic: FALSE
