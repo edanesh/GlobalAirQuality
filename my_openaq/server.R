@@ -17,8 +17,12 @@ library(leaflet)
 # library(googleID)
 
 # set the scopes required
-options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/bigquery",
-                                        "https://www.googleapis.com/auth/cloud-platform"))
+options(
+        googleAuthR.scopes.selected = c(
+                "https://www.googleapis.com/auth/bigquery",
+                "https://www.googleapis.com/auth/cloud-platform"
+        )
+)
 
 # you may also set the client id and secret here as well
 options(googleAuthR.client_id = "822733051602-009ejjdpvlaiho0iqqsp0ss9qras42h2.apps.googleusercontent.com",
@@ -30,22 +34,22 @@ bqr_auth(".httr-oauth")
 
 project <- "big-sunup-248507"
 query_CO <-
-        "SELECT location, value, latitude, longitude 
-        FROM `bigquery-public-data.openaq.global_air_quality` 
-        WHERE (pollutant like 'co' AND value > 0)"
+        "SELECT location, value, latitude, longitude
+FROM `bigquery-public-data.openaq.global_air_quality`
+WHERE (pollutant like 'co' AND value > 0)"
 
 
-custom_cluster <- "function (cluster) {
-                        var childCount = cluster.getChildCount();
-                        if (childCount < 100) {
-                                c = 'rgba(128, 128, 128, 0.5);'
-                        } else if (childCount < 1000) {
-                                c = 'rgba(128, 128, 128, 0.5);'
-                        } else {
-                                c = 'rgba(128, 128, 128, 0.5);'
-                        }
-                        return new L.DivIcon({ html: '<div style=\"background-color:'+c+'\"><span>' + childCount + '</span></div>', className: 'marker-cluster', iconSize: new L.Point(40, 40) });
-}"
+# custom_cluster <- "function (cluster) {
+# var childCount = cluster.getChildCount();
+# if (childCount < 100) {
+# c = 'rgba(128, 128, 128, 0.5);'
+# } else if (childCount < 1000) {
+# c = 'rgba(128, 128, 128, 0.5);'
+# } else {
+# c = 'rgba(128, 128, 128, 0.5);'
+# }
+# return new L.DivIcon({ html: '<div style=\"background-color:'+c+'\"><span>' + childCount + '</span></div>', className: 'marker-cluster', iconSize: new L.Point(40, 40) });
+# }"
 
 
 server <- function(input, output, session) {
@@ -99,7 +103,11 @@ server <- function(input, output, session) {
                                      #         bq_table_download(tb_CO)
                                      
                                      # with bigqueryr
-                                     data_CO <- bqr_query(project, "sample", query_CO, useLegacySql = FALSE)
+                                     data_CO <-
+                                             bqr_query(project,
+                                                       "sample",
+                                                       query_CO,
+                                                       useLegacySql = FALSE)
                                      
                                      
                                      sites <- data_CO %>%
@@ -125,24 +133,30 @@ server <- function(input, output, session) {
                                      })
                              }
                              
-                             icons <- awesomeIcons(
-                                     icon = 'ios-close',
-                                     iconColor = 'black',
-                                     library = 'ion',
-                                     markerColor = getColor(isolate(data()))
-                             )
+                             # icons <- awesomeIcons(
+                             #         icon = 'circle',
+                             #         iconColor = 'black',
+                             #         library = 'ion',
+                             #         markerColor = getColor(isolate(data()))
+                             # )
                              
                              output$COmap <- renderLeaflet({
                                      data()  %>%
                                              leaflet() %>%
                                              addTiles() %>%
-                                             addAwesomeMarkers(
-                                                     icon = icons,
+                                             addCircleMarkers(
+                                                     #icon = icons,
                                                      label =  ~ names,
-                                                     clusterOptions = markerClusterOptions(
-                                                             iconCreateFunction = JS(custom_cluster),
-                                                             maxClusterRadius = 20
-                                                     )
+                                                     
+                                                     fillColor = getColor(isolate(data())),
+                                                     fillOpacity = 0.5,
+                                                     radius = 5,
+                                                     stroke = FALSE
+                                                     # clusterOptions = markerClusterOptions(
+                                                     #         iconCreateFunction = JS(custom_cluster),
+                                                     #         maxClusterRadius = 20
+                                                     # )
+                                                     
                                              ) %>% addLegend(
                                                      title = "CO Level",
                                                      labels = c(
