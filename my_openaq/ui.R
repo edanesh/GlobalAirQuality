@@ -8,8 +8,6 @@
 #
 
 library(shiny)
-#library(googleAuthR)
-#library(shinyjs)
 library(leaflet)
 
 
@@ -20,14 +18,8 @@ ui <- navbarPage(
         tabPanel(
                 "Description",
                 
-                #useShinyjs(),
-                # sidebarLayout(sidebarPanel(
-                #         p("Welcome!"),
-                #         googleAuthUI("gauth_login")
-                # ),
-                #mainPanel(textOutput("display_username"))
                 mainPanel(
-                        br(), 
+                        br(),
                         "Here, I have used the OpenAQ air quality database in Google Cloud Platform [1] to visualise pollution levels around the world.",
                         br(),
                         "OpenAQ is an open-source project to surface live, real-time air quality data from around the world. Their “mission is to enable previously impossible science, impact policy and empower the public to fight air pollution.” The data includes air quality measurements from 5490 locations in 47 countries.",
@@ -38,23 +30,28 @@ ui <- navbarPage(
         ),
         
         tabPanel(
-                "Map",
+                "CO Map",
                 actionButton("go", "refresh"),
-                actionButton(inputId = "submit_loc",
-                             label = "Submit"),
-                mainPanel(leafletOutput("COmap", height = 400))
+                mainPanel(
+                        "last updated at:",
+                        textOutput("timestamp"),
+                        leafletOutput("COmap", height = 400)
+                )
         ),
         
         tabPanel(
                 "References",
                 br(),
                 h5("[1] Link to openAQ BigQuery database"),
-                a("https://console.cloud.google.com/marketplace/details/openaq/real-time-air-quality?filter=solution-type:dataset&q=air%20quality&id=2e51036c-7370-4637-b87f-a001b591b991")
+                a(
+                        "https://console.cloud.google.com/marketplace/details/openaq/real-time-air-quality?filter=solution-type:dataset&q=air%20quality&id=2e51036c-7370-4637-b87f-a001b591b991"
+                )
         ),
         
         # hides warning/msgs in the shiny app (?)
-        tags$style(type="text/css",
-                   ".shiny-output-error { visibility: hidden; }",
-                   ".shiny-output-error:before { visibility: hidden; }"
+        tags$style(
+                type = "text/css",
+                ".shiny-output-error { visibility: hidden; }",
+                ".shiny-output-error:before { visibility: hidden; }"
         )
 )
