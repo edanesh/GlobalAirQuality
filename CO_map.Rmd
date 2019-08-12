@@ -1,7 +1,7 @@
 ---
 title: "Global Air Quality"
 author: "E Danesh"
-date: "1 August 2019"
+date: "12 August 2019"
 knit: (function(inputFile, encoding) {rmarkdown::render(inputFile, encoding = encoding, output_file ='index.html')})
 output: html_document
 ---
@@ -71,12 +71,12 @@ getColor <- function(sites) {
   } })
 }
 
-icons <- awesomeIcons(
-  icon = 'ios-close',
-  iconColor = 'black',
-  library = 'ion',
-  markerColor = getColor(sites)
-)
+# icons <- awesomeIcons(
+#   icon = 'ios-close',
+#   iconColor = 'black',
+#   library = 'ion',
+#   markerColor = getColor(sites)
+# )
 ```
 
 ```{r}
@@ -84,18 +84,40 @@ icons <- awesomeIcons(
 sites %>% 
 leaflet() %>% 
 addTiles() %>% 
-addAwesomeMarkers(icon=icons, label=~names, clusterOptions = markerClusterOptions(iconCreateFunction=JS("function (cluster) {    
-    var childCount = cluster.getChildCount();  
-    if (childCount < 100) {  
-      c = 'rgba(128, 128, 128, 0.5);'
-    } else if (childCount < 1000) {  
-      c = 'rgba(128, 128, 128, 0.5);'  
-    } else { 
-      c = 'rgba(128, 128, 128, 0.5);'  
-    }    
-    return new L.DivIcon({ html: '<div style=\"background-color:'+c+'\"><span>' + childCount + '</span></div>', className: 'marker-cluster', iconSize: new L.Point(40, 40) });
-
-  }"), maxClusterRadius = 20)) %>% addLegend(title = "CO Level", labels = c("High (>1000 ug/m3)", "Medium (500-1000 ug/m3)", "Low (<500 ug/m3)"), colors = c("red", "orange", "green"))
+# addAwesomeMarkers(icon=icons, label=~names, clusterOptions = markerClusterOptions(iconCreateFunction=JS("function (cluster) {    
+#     var childCount = cluster.getChildCount();  
+#     if (childCount < 100) {  
+#       c = 'rgba(128, 128, 128, 0.5);'
+#     } else if (childCount < 1000) {  
+#       c = 'rgba(128, 128, 128, 0.5);'  
+#     } else { 
+#       c = 'rgba(128, 128, 128, 0.5);'  
+#     }    
+#     return new L.DivIcon({ html: '<div style=\"background-color:'+c+'\"><span>' + childCount + '</span></div>', className: 'marker-cluster', iconSize: new L.Point(40, 40) });
+# 
+#   }"), maxClusterRadius = 20)) %>% addLegend(title = "CO Level", labels = c("High (>1000 ug/m3)", "Medium (500-1000 ug/m3)", "Low (<500 ug/m3)"), colors = c("red", "orange", "green"))
+addCircleMarkers(
+        #icon = icons,
+        label =  ~ names,
+        #label = paste(, sep=","),
+        fillColor = getColor(sites),
+        fillOpacity = 0.5,
+        radius = 6,
+        stroke = FALSE
+        # clusterOptions = markerClusterOptions(
+        #         iconCreateFunction = JS(custom_cluster),
+        #         maxClusterRadius = 20
+        # )
+        
+) %>% addLegend(
+        title = "CO Level",
+        labels = c(
+                "High (>1000 ug/m3)",
+                "Medium (500-1000 ug/m3)",
+                "Low (<500 ug/m3)"
+        ),
+        colors = c("red", "orange", "green")
+)
 ```
 
 This report was build by:
