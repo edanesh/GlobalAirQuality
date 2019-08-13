@@ -146,9 +146,12 @@ server <- function(input, output, session) {
                                              addTiles() %>%
                                              addCircleMarkers(
                                                      #icon = icons,
-                                                     label =  ~ names,
-                                                     #label = paste(, sep=","),
-                                                     fillColor = getColor(isolate(data())),
+                                                     #label =  ~ names,
+                                                     label = paste(data()$names, data()$index, sep = ", "),
+                                                     
+                                                     
+                                                     fillColor = getColor(isolate(data(
+                                                     ))),
                                                      fillOpacity = 0.5,
                                                      radius = 6,
                                                      stroke = FALSE
